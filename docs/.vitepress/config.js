@@ -22,7 +22,7 @@ const mainSideBar = [
 
 
 module.exports = {
-    title: 'ProDev Build Guide',
+    title: 'ProDev - Build Guide',
     description: 'A break down of the project build process',
     themeConfig: {
         nav: [
