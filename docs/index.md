@@ -1,3 +1,7 @@
+![Main-1](https://user-images.githubusercontent.com/73107656/114161994-9273d500-9920-11eb-8e5a-a3a8fa7d2806.png)
+
+![24 -display](https://user-images.githubusercontent.com/73107656/114161888-71ab7f80-9920-11eb-8c3b-3418e7b447e0.png)
+
 ## Introduction
 
 This guide serves to break down and model the build process, detailing the awkward nuts and bolts at each step. The focus is on the patterns used when working with views, components and composables and the critical details that pull a project together.
@@ -6,7 +10,7 @@ This guide serves to break down and model the build process, detailing the awkwa
 
 Below is the component architecture for the build:
 
-![image](https://user-images.githubusercontent.com/73107656/112589968-f2835b00-8df9-11eb-9fcb-0b3c6ac92ea3.png)
+![image](https://user-images.githubusercontent.com/73107656/114159806-1bd5d800-991e-11eb-82ba-593748c79a7b.png)
 
 
 ## Project patterns
@@ -25,11 +29,13 @@ The Vue cli is used to create the project and includes vue-router. The project i
 The backend utilises Firebase services: 
 
 - Firestore
+    - Collections for `projects`, `bugs` and `messages` 
 - Storage
+    - Storage is used for project cover image and solution images for bugs
 - Authentication
 
 ## Note
 
 In an attempt to keep the guide concise, recurring patterns for example adding a view to the router, importing a component or adding a route guard to a new view are assumed and omitted. Also styling is specific to each project and also not included.
 
-The side bar is laid out in the oder of the build and the entry point for each section is the view.  However each section includes details for the relevant components, composables and any interactions with Firebase.
+The side bar is laid out in the order of the build and the entry point for each section is the view.  However each section includes details for the relevant components, composables and any interactions with Firebase.

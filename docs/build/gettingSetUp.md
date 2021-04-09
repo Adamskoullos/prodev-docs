@@ -65,11 +65,134 @@ SDK omitted
 
 ## Setting up the Views and router
 
-Before moving on to build out the main dashboard and navigation create each view and set up the router. The router at this stage is not fully built as route guards are to be added:
+Before moving on to build out the main dashboard and navigation create each view and set up the router (index.js within the router folder). Note the route guard is added using Firebase authentication.  The route guard uses `next()` instead of push() and must have `to`, `from` and `next` passed in.  Once defined the route guard is used for each route that requires a logged in user before access:
 
-![Screenshot from 2021-03-26 10-16-20](https://user-images.githubusercontent.com/73107656/112617059-62a2d880-8e1c-11eb-8828-73203166e987.png)
+```js
+import { createRouter, createWebHistory } from 'vue-router'
+import Home from '../views/Home.vue'
+import TeamProjects from '../views/TeamProjects.vue'
+import MyProjects from '../views/MyProjects.vue'
+import NewProject from '../views/NewProject.vue'
+import Bugs from '../views/Bugs.vue'
+import NewBug from '../views/NewBug.vue'
+import Chat from '../views/Chat'
+import ReportIssue from '../views/ReportIssue'
+import Contact from '../views/Contact.vue'
+import Login from '../views/auth/Login.vue'
+import Signup from '../views/auth/Signup.vue'
+import SingleProject from '../views/SingleProject.vue'
+import SingleBug from '../views/SingleBug.vue'
 
-Each view is just given an `<h1>` to verify view and also flexbox layout:
+import { fAuth } from '../firebase/config'
+
+const requireAuth = (to, from, next) => {
+  const user = fAuth.currentUser
+  if(!user){
+    next({ name: 'Home' })
+  } else{
+    next()
+  }
+}
+
+const routes = [
+  {
+    path: '/',
+    name: 'Home',
+    component: Home
+  },
+  {
+    path: '/projects',
+    name: 'TeamProjects',
+    component: TeamProjects,
+    props: true,
+    beforeEnter: requireAuth
+  },
+  {
+    path: '/projects/user',
+    name: 'MyProjects',
+    component: MyProjects,
+    props: true,
+    beforeEnter: requireAuth
+  },
+  {
+    path: '/projects/new',
+    name: 'NewProject',
+    component: NewProject,
+    props: true,
+    beforeEnter: requireAuth
+  },
+  {
+    path: '/projects/:id',
+    name: 'SingleProject',
+    component: SingleProject,
+    props: true,
+    beforeEnter: requireAuth
+  },
+  {
+    path: '/bugs',
+    name: 'Bugs',
+    component: Bugs,
+    props: true,
+    beforeEnter: requireAuth
+  },
+  {
+    path: '/bugs/new',
+    name: 'NewBug',
+    component: NewBug,
+    props: true,
+    beforeEnter: requireAuth
+  },
+  {
+    path: '/bugs/:id',
+    name: 'SingleBug',
+    component: SingleBug,
+    props: true,
+    beforeEnter: requireAuth
+  },
+  {
+    path: '/chat',
+    name: 'Chat',
+    component: Chat,
+    props: true,
+    beforeEnter: requireAuth
+  },
+  {
+    path: '/issue',
+    name: 'ReportIssue',
+    component: ReportIssue,
+    props: true,
+    beforeEnter: requireAuth
+  },
+  {
+    path: '/contact',
+    name: 'Contact',
+    component: Contact,
+    props: true
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: Login,
+    props: true
+  },
+  {
+    path: '/signup',
+    name: 'Signup',
+    component: Signup,
+    props: true
+  }
+]
+
+const router = createRouter({
+  history: createWebHistory(process.env.BASE_URL),
+  routes
+})
+
+export default router
+
+```
+
+At this stage of the build each view is just given an `<h1>` to verify view and also flexbox layout:
 
 ![Screenshot from 2021-03-26 10-18-44](https://user-images.githubusercontent.com/73107656/112617276-a85fa100-8e1c-11eb-8ec6-a1dfbd5bcb42.png)
 
