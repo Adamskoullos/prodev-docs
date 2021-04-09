@@ -16,7 +16,24 @@ The project utilises the following composablse which we will dissect now:
 
 ## getUser
 
-![Screenshot from 2021-03-26 11-42-01](https://user-images.githubusercontent.com/73107656/112626587-50c73280-8e28-11eb-940e-10d4cdebf444.png)
+```js
+import { ref } from "@vue/reactivity"
+import { fAuth } from "../firebase/config"
+
+const user = ref(fAuth.currentUser)
+
+fAuth.onAuthStateChanged(_user => {
+    user.value = _user
+})
+
+const getUser = () => {
+    return { user } 
+}
+
+export default getUser
+
+
+```
 
 Ref and firebase auth are imported, a const `user` is created as a ref and the value of the current user is assigned to user.  If there is a current user logged in the value of user is the user object, if not the value is `null`.
 
