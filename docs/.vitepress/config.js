@@ -6,7 +6,6 @@ const mainSideBar = [
     { text: 'Authentication', link: '/build/authentication' },
     { text: 'New Project View', link: '/build/newProjectView' },
     { text: 'Projects View', link: '/build/projectListView' },
-    { text: 'Firestore Queries', link: '/build/firestoreQueries' },
     { text: 'Single Project View', link: '/build/singleProjectView' },
     { text: 'Firebase Rules', link: '/build/firebaseRules' },
     { text: 'Project Tasks', link: '/build/projectTasks' },

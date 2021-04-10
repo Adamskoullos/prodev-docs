@@ -196,6 +196,31 @@ At this stage of the build each view is just given an `<h1>` to verify view and 
 
 ![Screenshot from 2021-03-26 10-18-44](https://user-images.githubusercontent.com/73107656/112617276-a85fa100-8e1c-11eb-8ec6-a1dfbd5bcb42.png)
 
+## Managing a page reload
+
+If a logged in user reloads the page we do not want them to get redirected to the home screen before Firebase has had chance to authenticate them.  To prevent this we add the following pattern to `main.js`.
+
+First declare `app`, then add Firebase authentication state change monitor and only if app has no value, create the app.  If there is already a current user logged in this code will not re-run and the current view the user is on will get reloaded.
+
+```js
+
+import { createApp } from 'vue'
+import App from './App.vue'
+import router from './router'
+import { fAuth } from './firebase/config'
+import "bootstrap/dist/css/bootstrap.min.css"
+import "bootstrap"
+import './assets/main.css'
+
+
+let app
+
+fAuth.onAuthStateChanged(() => {
+    if(!app){
+        app = createApp(App).use(router).mount('#app')
+    }
+})
+```
 
 
 
