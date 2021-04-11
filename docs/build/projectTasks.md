@@ -10,7 +10,7 @@ Within the SingleProject view there is a nested AddTask component which has the 
 </div>
 ```
 
-The AddTask component has a simple form and below is the component script. Focusing on the `handleAddTask` async function, an object is defined `newTask` with the task property set the value of the user input. Then the await keyword is used when invoking the `updateDoc` function which is destructed from the `useDocument` composable.  This connects to Firestore and is itself an asynchronous function.
+The AddTask component has a simple form and below is the component script. Focusing on the `handleAddTask` async function, an object is defined `newTask` with the task property set to the value of the user input. Then the await keyword is used when invoking the `updateDoc` function which is destructed from the `useDocument` composable.  This connects to Firestore and is itself an asynchronous function.
 
 The `updateDoc` takes an input which is an object with the properties to be updated. The tasks array is to be updated so first we spread the existing tasks array in and then add the new task.
 
