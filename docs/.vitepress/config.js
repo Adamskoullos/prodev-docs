@@ -12,7 +12,6 @@ const mainSideBar = [
     { text: 'New Bug View', link: '/build/newBug' },
     { text: 'Bug Journal View', link: '/build/bugJournalView' },
     { text: 'Single Bug View', link: '/build/singleBugView' },
-    { text: 'New Chat Form', link: '/build/newChatForm' },
     { text: 'Chat Window', link: '/build/chatWindow' },
     { text: 'Deployment', link: '/build/deployment' },
 ]
