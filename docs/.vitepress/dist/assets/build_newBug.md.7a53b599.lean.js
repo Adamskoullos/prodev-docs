@@ -1,0 +1,1 @@
+import{o as n,c as s,a}from"./app.2550f8b5.js";const t='{"title":"New Bug View","description":"","frontmatter":{},"relativePath":"build/newBug.md","lastUpdated":1618126588043}',p={},o=a('',11);p.render=function(a,t,p,e,c,u){return n(),s("div",null,[o])};export default p;export{t as __pageData};

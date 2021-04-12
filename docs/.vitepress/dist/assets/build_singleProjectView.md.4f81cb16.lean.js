@@ -1,0 +1,1 @@
+import{o as n,c as a,a as s}from"./app.2550f8b5.js";const t='{"title":"Single Project View","description":"","frontmatter":{},"relativePath":"build/singleProjectView.md","lastUpdated":1618040307060}',p={},o=s('',10);p.render=function(s,t,p,e,c,u){return n(),a("div",null,[o])};export default p;export{t as __pageData};

@@ -1,0 +1,1 @@
+import{o as n,c as s,a}from"./app.2550f8b5.js";const t='{"title":"Project Tasks","description":"","frontmatter":{},"relativePath":"build/projectTasks.md","lastUpdated":1618042933566}',p={},o=a('',6);p.render=function(a,t,p,e,c,u){return n(),s("div",null,[o])};export default p;export{t as __pageData};
