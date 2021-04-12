@@ -69,7 +69,15 @@ Then above the break point the `Chat` view is moved to the side-chat column, whe
 
 ## New Message component
 
-Diving into the `NewMessage` component
+Diving into the `NewMessage` component below: 
+
+The form contains a textarea with a `v-model` binding the user input with the reactive ref property `message` within the setup function.  On submission of the form which is triggered by a keydown event by the enter key, the `handleSubmit` function is invoked.
+
+This function adds a new document to the messages collection, lets break it down:
+
+`handleSubmit` is an asynchronous function which initially defines an object `chat` which is the new message to be added to the messages collection.  Critically here the `createdAt` property includes the timestamp which we will return to in the next section.
+
+Once the `chat` object has been defined, await is used and then `addDoc` is invoked passing in the new chat message object. `addDoc` itself is an asynchronous function as it connects to Firebase Firestore and initially returns a promise. Once complete and if there are no errors, the message user input is set to an empty string ready for the next one and the new message is now in the messages collection and in real-time rendered to view via the messages component which we will move onto next.
 
 
 ```html
@@ -121,3 +129,68 @@ export default {
 ```
 
 ## Messages component
+
+The messages component has a similar structure to the ProjectsList and BugsList components in that `v-for` is used to render each message within the messages collection. However unlike the Bugs view where each bug is listed similar to a blog post, the messages are organised to be newest at the bottom and for the container element to open with the scrollbar automatically at the bottom to always show the last message.  Lets look at the code for this.
+
+Near the bottom of the setup function below, the messages const is defined with the initial value of null.  Then below that the Vue lifecycle hook `onUpdated` is used passing in the callback to be executed. The key here is to set the scrollTop to always equal the scrollHeight.
+
+Coming back to the `timestamp` we created when the new message was added to the collection: First a method is imported `formatDistanceToNow` from `date-fns`, then within the setup function a computed property is defined `formattedDocuments`:
+
+Note: `documents` is extracted from the `getCollectionMessages` composable
+
+If there there is access to the messages collection, loop through each message using `map` and for each message create a property `time` and use the timestamp to reformat the data. Then spread the message document into a new object and reassign `time` as the `createdAt` value. Then loop through and render the `formattedDocuments` instead of the original messages collection `documents`.
+
+The result is that each message now has `x minutes ago` or `x days ago` instead of a long winded date, much more chat app friendly.
+
+```html 
+
+<template>
+    <div class="chat-window">
+        <div v-if="error" class="error">{{ error }}</div>
+        <div v-if="documents" class="messages" ref="messages">
+            <transition-group name="list" appear>
+                <div v-for="doc in formattedDocuments" :key="doc.id" class="single" :class="{light: light}">
+                    <div class="timestamp" :class="{light: light}">
+                        <span class="created-at" :class="{light: light}">{{ doc.createdAt }}</span>
+                        <span class="name" :class="{light: light}">{{ doc.name }}</span>
+                    </div>
+                    <span class="message" :class="{light: light}">{{ doc.message }}</span>
+                </div>
+            </transition-group>
+        </div>
+    </div>
+</template>
+
+<script>
+import getCollectionMessages from '../composables/getCollectionMessages'
+import { formatDistanceToNow } from 'date-fns'
+import { computed, onUpdated, ref } from '@vue/runtime-core'
+
+
+export default {
+    props: ['light'],
+    setup(){
+        const { documents, error } = getCollectionMessages('messages')
+
+        const formattedDocuments = computed (() => {
+            if(documents.value){
+                return documents.value.map(doc => {
+                    let time = formatDistanceToNow(doc.createdAt.toDate())
+                    return { ...doc, createdAt: time }
+                })
+            }
+        })
+
+        // auto-scroll to bottom of messages to show the newest
+        const messages = ref(null)
+        // fire on every update to maintain always showing the latest messages
+        onUpdated(() => {
+            messages.value.scrollTop = messages.value.scrollHeight
+        })
+
+        return { formattedDocuments, documents, error, messages }
+    }
+}
+</script>
+
+```

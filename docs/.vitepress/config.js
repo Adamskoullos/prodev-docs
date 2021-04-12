@@ -22,7 +22,7 @@ module.exports = {
     description: 'A break down of the project build process',
     themeConfig: {
         nav: [
-            { text: 'Live App', link: '' }
+            { text: 'Live App', link: 'https://www.prodev.dev/' }
          ],
         sidebar: {
             '/index': mainSideBar,
