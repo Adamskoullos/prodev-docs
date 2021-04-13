@@ -77,7 +77,7 @@ This function adds a new document to the messages collection, lets break it down
 
 `handleSubmit` is an asynchronous function which initially defines an object `chat` which is the new message to be added to the messages collection.  Critically here the `createdAt` property includes the timestamp which we will return to in the next section.
 
-Once the `chat` object has been defined, await is used and then `addDoc` is invoked passing in the new chat message object. `addDoc` itself is an asynchronous function as it connects to Firebase Firestore and initially returns a promise. Once complete and if there are no errors, the message user input is set to an empty string ready for the next one and the new message is now in the messages collection and in real-time rendered to view via the messages component which we will move onto next.
+Once the `chat` object has been defined, await is used and then `addDoc` is invoked passing in the new chat message object. `addDoc` itself is an asynchronous function as it connects to Firebase Firestore and initially returns a promise. Once complete and if there are no errors, the message user input is set to an empty string ready for the next one and the new message is now in the messages collection and in real-time rendered to the view via the messages component which we will move onto next.
 
 
 ```html
@@ -138,7 +138,7 @@ Coming back to the `timestamp` we created when the new message was added to the 
 
 Note: `documents` is extracted from the `getCollectionMessages` composable
 
-If there there is access to the messages collection, loop through each message using `map` and for each message create a property `time` and use the timestamp to reformat the data. Then spread the message document into a new object and reassign `time` as the `createdAt` value. Then loop through and render the `formattedDocuments` instead of the original messages collection `documents`.
+If there is access to the messages collection, loop through each message using `map` and for each message create a property `time` and use the timestamp to reformat the data saving the new format to `time`. Then spread the message document into a new object and reassign `time` as the `createdAt` value. Then loop through and render the `formattedDocuments` instead of the original messages collection `documents`.
 
 The result is that each message now has `x minutes ago` or `x days ago` instead of a long winded date, much more chat app friendly.
 
